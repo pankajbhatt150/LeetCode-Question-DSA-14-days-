@@ -11,23 +11,36 @@
 class Solution {
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
-     ListNode* fast, *slow;
-	fast = head;
-	slow = head;
-// Move fast pointer till n iterations
-	while(n){
-		fast = fast->next; 
-		n--;   }
-	if(!fast)
-		return head->next;
-		
- /* increment both fast and slow pointers together untill fast reaches the end */ 
-	while( fast -> next != NULL) {
-		fast = fast -> next;
-		slow = slow -> next;
-	}
-	slow -> next = slow -> next -> next;
-	return head;   
-        
+     	//check if head is NLL or head Next is NULL
+		if(head==NULL || (head->next==NULL)){
+			return NULL;
+		}
+    
+    //start first and second from the head
+    ListNode*first=head;
+    ListNode*second=head;
+
+    //make first forward n times
+    while(n--){
+        first=first->next;
+    }
+    
+    //edge condtion
+    //if first is null means n is eqaul to length of linkedlist
+    if(first==NULL){
+        head=head->next;
+        return head;
+    }
+    
+    //make forward first and second at the same time
+    while(first->next!=NULL && first!=NULL){
+        first=first->next;
+        second=second->next;
+    }
+    
+    //point second pointer to next next of send pointer
+    second->next=second->next->next;
+    
+    return head;   
     }
 };
